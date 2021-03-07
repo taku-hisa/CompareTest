@@ -13,6 +13,12 @@ class wordAdapter(
     private val list: List<Word>
 ): RecyclerView.Adapter<wordAdapter.ViewHolder>() {
 
+    //クリック処理を追加
+    private  var listener: ((Word) -> Unit)? = null
+    fun setOnClickListener(listener:(Word) -> Unit){
+        this.listener = listener
+    }
+
     class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
         val text : TextView = view.findViewById(android.R.id.text1)
     }
@@ -24,6 +30,9 @@ class wordAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.text.text = list[position].word
+        holder.text.setOnClickListener{
+            listener?.invoke(list[position])
+        }
     }
 
     override fun getItemCount(): Int = list.size

@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //LiveDataだと削除がうまく処理される
         viewModel.getItem.observe( this, Observer {
             binding.recyclerView.apply{
                 layoutManager =
@@ -29,7 +30,12 @@ class MainActivity : AppCompatActivity() {
                         else
                         -> GridLayoutManager(context, 4)
                     }
-                adapter = wordAdapter(context,it)
+                adapter = wordAdapter(context,it).apply {
+                    setOnClickListener {
+                        viewModel.deleteWord(it.id)
+                    }
+                }
+
             }
         })
 

@@ -24,4 +24,10 @@ class MainViewModel (application: Application): AndroidViewModel(application) {
             dao.insertWord(Word)
         }
     }
+
+    fun deleteWord(Id:Int){
+        viewModelScope.launch (Dispatchers.IO) {
+            dao.deleteitem(Id)
+        }
+    }
 }
